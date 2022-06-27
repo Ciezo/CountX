@@ -56,7 +56,6 @@ public class Item {
 		return name; 
 	}
 	
-	// This method is if we want to manually set up a code
 	public void setCode(String code) {
 		this.code = code; 				
 	}

@@ -102,6 +102,7 @@ public class JaxWsServerImpl implements JaxWsServer {
 			item_ls.setCode(entry.getKey());
 			item_ls.setBrand(entry.getValue().getBrand());
 			item_ls.setPrice(entry.getValue().getPrice());
+			product_record.add(item_ls); 
 		}
 		
 		
