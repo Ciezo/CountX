@@ -42,7 +42,7 @@ public interface JaxWsServer {
 	@WebMethod String addItem(Item insert_item);
 	
 	// Interface for updating items to the inventory
-	@WebMethod Item updateItem(Item update_item);
+	@WebMethod Item updateItem(String code, Item update_item);
 	
 	// Interface for removing items from the inventory
 	@WebMethod String removeItem(Item remove_item);
