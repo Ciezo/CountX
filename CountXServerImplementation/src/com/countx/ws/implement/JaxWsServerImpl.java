@@ -20,18 +20,28 @@ import com.countx.server.JaxWsServer;
 import javax.jws.WebService;
 import com.countx.server.Item;
 
+import java.util.HashMap;
+import java.util.Map;
 
 //ANNOTATIONS
 @WebService (endpointInterface="com.countx.server.JaxWsServer")
 public class JaxWsServerImpl implements JaxWsServer {
 
 	// Attributes
-	
+	/**
+	 *  We need a Map to create a HashMap because what I want to do here is to store everything
+	 *  in a Map just like records in a database.
+	 */
+	Map <String, Item> product = new HashMap<String, Item>();
 	
 	@Override
-	public Item fetchItem() {
+	public Item fetchItem(String code) {
+		// Access the specific object through the Item code
+		if (product.containsKey(code)) {
+			return product.get(code); 
+		}
 		
-		return null;
+		return new Item();
 	}
 	
 	@Override
