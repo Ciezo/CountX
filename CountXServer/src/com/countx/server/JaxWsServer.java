@@ -36,7 +36,7 @@ public interface JaxWsServer {
 	 */
 	
 	// Interface to fetch items as general to access attributes
-	@WebMethod Item fetchItem();
+	@WebMethod Item fetchItem(String code);
 	
 	// Interface for adding items to the inventory
 	@WebMethod String addItem(Item insert_item);

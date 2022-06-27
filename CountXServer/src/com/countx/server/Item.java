@@ -31,7 +31,7 @@ package com.countx.server;
 public class Item {
 	
 	private String name; 
-	private int code; 
+	private String code; 
 	private String brand;
 	private int price;
 	
@@ -41,7 +41,7 @@ public class Item {
 	public Item(String name, int price, String brand) {
 		this.name = name; 
 		generate.setRGN();
-		this.code = generate.getRGN();
+		this.code = generate.genKEY();
 		this.brand = brand;
 		this.price = price; 		
 	}
@@ -57,11 +57,11 @@ public class Item {
 	}
 	
 	// This method is if we want to manually set up a code
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code; 				
 	}
 	
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 	
