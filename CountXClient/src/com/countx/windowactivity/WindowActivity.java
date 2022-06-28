@@ -36,20 +36,21 @@ public class WindowActivity extends JFrame {
 	JButton newProduct_btn;
 	JButton setBrand_btn;
 	JButton removeItem_btn;
+	JButton home_btn; 
 	
 	// Font
 	Font seoge = new Font("Segoe UI", Font.PLAIN, 12); 
 	
 	// Icon and Image
 	ImageIcon logo = new ImageIcon("assets/icon/logo.png"); 
-	
+	ImageIcon home = new ImageIcon("assets/icon/home.png");
 	
 	public WindowActivity() {
 		
 		// Initialize the properties of this Frame	
 		setTitle("CountX Inventory Based Application by Cloyd Van S. Secuya"); 		// Set the window title
 		setSize(800, 400);															// Set the size of the window
-		setPreferredSize(new Dimension(800, 400));									// Set the preferred component size
+		setPreferredSize(new Dimension(960, 720));									// Set the preferred component size
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 							// Exit and kill the process on close of the app
 		setLocationRelativeTo(null);  												// Upon launching the window, set it to the center of the screen
 		
@@ -67,13 +68,13 @@ public class WindowActivity extends JFrame {
 	private void initComponents() {
 		// Initialize Panels
 		contentP = new JPanel(); 
-		headerP = new JPanel(); 
+		headerP = new JPanel(new BorderLayout()); 
 		sidebarP = new JPanel(); 
 		logoP = new JPanel();
 		padding = new JPanel();
 		
-		contentP.setPreferredSize(new Dimension(800, 400));
-		headerP.setPreferredSize(new Dimension(800, 30));
+		contentP.setPreferredSize(new Dimension(960, 720));
+		headerP.setPreferredSize(new Dimension(800, 50));
 		sidebarP.setPreferredSize(new Dimension(120, 400));
 		logoP.setOpaque(false);
 		padding.setOpaque(false);
@@ -87,9 +88,15 @@ public class WindowActivity extends JFrame {
 		tasks = new JLabel("TASKS", JLabel.CENTER);
 		headerTitle = new JLabel("DASHBOARD", JLabel.CENTER);
 		
+		// Initialize the buttons
 		newProduct_btn = new JButton("New Product");
 		setBrand_btn = new JButton("Set up brand");
 		removeItem_btn = new JButton("Remove Item");
+		home_btn = new JButton(home);
+		
+		home_btn.setOpaque(false);
+		home_btn.setContentAreaFilled(false);
+		home_btn.setBorderPainted(false);
 		
 		// Set up background color
 		newProduct_btn.setBackground(new Color(37, 54, 70 ));
@@ -112,14 +119,15 @@ public class WindowActivity extends JFrame {
 		// Set up logo and icon
 		appLogo = new JLabel(logo);
 		appIcon = new JLabel("AppIcon", JLabel.CENTER);
-		padding.setPreferredSize(new Dimension(50, 130));
+		padding.setPreferredSize(new Dimension(50, this.getHeight()));
 		padding.setMaximumSize(getMaximumSize().getSize());
 		
 		/**
 		 * @NOTE: ADDING THE COMPONENTS TO THEIR RESPECTIVE PANELS  
 		 */
 		// Header Panel
-		headerP.add(headerTitle);
+		headerP.add(home_btn, BorderLayout.WEST);
+		headerP.add(headerTitle, BorderLayout.CENTER);
 		
 		// Logo Panel
 		logoP.add(appLogo);
