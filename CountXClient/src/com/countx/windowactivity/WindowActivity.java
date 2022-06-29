@@ -19,8 +19,15 @@ import java.awt.*;
 
 public class WindowActivity extends JFrame {
 	
+	// Layout Manager
+	CardLayout card; 
+	
 	// Panels 
 	JPanel contentP; 
+		JPanel dashboardP; 
+		JPanel newProductP; 
+		JPanel setBrandP; 
+		JPanel removeItemP; 
 	JPanel headerP; 
 	JPanel sidebarP; 
 	JPanel logoP;
@@ -31,25 +38,52 @@ public class WindowActivity extends JFrame {
 	JLabel appLogo;
 	JLabel appIcon;
 	JLabel headerTitle; 
+	JLabel prodName; 
+	JLabel price; 
+	JLabel cat; 
+	JLabel prodCode; 
+	
+	// Text fields
+	JTextField getProdName_field;
+	JTextField getPrice_field;
+	JTextField getCat_field;
+	JTextField getProdCode_field;
+	
 	
 	// Buttons
 	JButton newProduct_btn;
 	JButton setBrand_btn;
 	JButton removeItem_btn;
 	JButton home_btn; 
+	JButton totalProducts_dash_btn; 
+	JButton brands_dash_btn; 
+	JButton categories_dash_btn; 
+	JButton records_dash_btn; 
+	JButton genCode;
+	JButton saveChanges;
 	
 	// Font
 	Font seoge = new Font("Segoe UI", Font.PLAIN, 12); 
+	Font seoge2 = new Font("Segoe UI", Font.PLAIN, 36); 
+	Font calibri = new Font("Calibri", Font.PLAIN, 18);
 	
 	// Icon and Image
 	ImageIcon logo = new ImageIcon("assets/icon/logo.png"); 
 	ImageIcon home = new ImageIcon("assets/icon/home.png");
 	
+	/*
+	 *  EVENT MASTER for registering components, adding listeners, 
+	 *  and setting up action commands
+	 */
+	// Event handling
+	EventMaster eventhandler = new EventMaster(WindowActivity.this); 
+	
 	public WindowActivity() {
 		
 		// Initialize the properties of this Frame	
 		setTitle("CountX Inventory Based Application by Cloyd Van S. Secuya"); 		// Set the window title
-		setSize(800, 400);															// Set the size of the window
+		setSize(960, 720);															// Set the size of the window
+		setResizable(false);														// No window resizing
 		setPreferredSize(new Dimension(960, 720));									// Set the preferred component size
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 							// Exit and kill the process on close of the app
 		setLocationRelativeTo(null);  												// Upon launching the window, set it to the center of the screen
@@ -61,23 +95,40 @@ public class WindowActivity extends JFrame {
 		// Add the initialized components
 		addComponents();
 		
+		// Add action commands
+		actionCommander();
+		
+		// Add Listeners 
+		addListeners(); 
+		
 		// Pack up the frame 
 		pack();
 	}
 	
+	/*
+	 * METHOD TO INITIALIZE ALL GLOBAL COMPONENTS
+	 * */
 	private void initComponents() {
+		
 		// Initialize Panels
 		contentP = new JPanel(); 
+			dashboardP = new JPanel(new GridLayout(4, 1, 5, 5));
+			newProductP = new JPanel(new GridLayout(10, 1, 10, 10));
 		headerP = new JPanel(new BorderLayout()); 
 		sidebarP = new JPanel(); 
 		logoP = new JPanel();
 		padding = new JPanel();
 		
+		// Panel Sizing
 		contentP.setPreferredSize(new Dimension(960, 720));
 		headerP.setPreferredSize(new Dimension(800, 50));
 		sidebarP.setPreferredSize(new Dimension(120, 400));
+		
+		// Panel Set Transparency
 		logoP.setOpaque(false);
 		padding.setOpaque(false);
+		dashboardP.setOpaque(false);
+		newProductP.setOpaque(false);
 		
 		// Set the background color
 		contentP.setBackground(Color.WHITE);
@@ -87,22 +138,69 @@ public class WindowActivity extends JFrame {
 		// Initialize labels
 		tasks = new JLabel("TASKS", JLabel.CENTER);
 		headerTitle = new JLabel("DASHBOARD", JLabel.CENTER);
+		prodName = new JLabel("Product Name", JLabel.LEFT);
+		price = new JLabel("Price", JLabel.LEFT); 
+		cat = new JLabel("Category", JLabel.LEFT);
+		prodCode = new JLabel("Product Code", JLabel.LEFT);
+		
+		// Initialize the text fields
+		getProdName_field = new JTextField();
+		getPrice_field = new JTextField();
+		getCat_field = new JTextField(); 
+		getProdCode_field = new JTextField();
 		
 		// Initialize the buttons
 		newProduct_btn = new JButton("New Product");
 		setBrand_btn = new JButton("Set up brand");
 		removeItem_btn = new JButton("Remove Item");
-		home_btn = new JButton(home);
+		home_btn = new JButton(home);		
+		totalProducts_dash_btn = new JButton("Total Products");
+		brands_dash_btn = new JButton("Brands");
+		categories_dash_btn = new JButton("Categories");
+		records_dash_btn = new JButton("Records"); 
+		genCode = new JButton("Generate Code");
+		saveChanges = new JButton("Save Changes"); 
 		
+		// Set up text field properties
+		getProdName_field.setPreferredSize(new Dimension(800, 30));
+		getPrice_field.setPreferredSize(new Dimension(800, 30));
+		getCat_field.setPreferredSize(new Dimension(800, 30));
+		getProdCode_field.setPreferredSize(new Dimension(800, 30));
+		
+		// Set up button properties
+		/* Home Button*/
 		home_btn.setOpaque(false);
 		home_btn.setContentAreaFilled(false);
 		home_btn.setBorderPainted(false);
+		
+		/* Dash board buttons */
+		totalProducts_dash_btn.setHorizontalAlignment(SwingConstants.RIGHT);
+		brands_dash_btn.setHorizontalAlignment(SwingConstants.RIGHT);
+		categories_dash_btn.setHorizontalAlignment(SwingConstants.RIGHT);
+		records_dash_btn.setHorizontalAlignment(SwingConstants.RIGHT);
+		genCode.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		totalProducts_dash_btn.setPreferredSize(new Dimension(800, 150));
+		brands_dash_btn.setPreferredSize(new Dimension(800, 100));
+		categories_dash_btn.setPreferredSize(new Dimension(800, 100));
+		records_dash_btn.setPreferredSize(new Dimension(800, 100));
+		
+		/* Generate Code  */
+		genCode.setPreferredSize(new Dimension(50, 30));
+		
+		/* Save Changes */
+		saveChanges.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		// Set up background color
 		newProduct_btn.setBackground(new Color(37, 54, 70 ));
 		setBrand_btn.setBackground(new Color(37, 54, 70 ));
 		removeItem_btn.setBackground(new Color(37, 54, 70 ));
-
+		totalProducts_dash_btn.setBackground(Color.WHITE);
+		brands_dash_btn.setBackground(Color.WHITE);
+		categories_dash_btn.setBackground(Color.WHITE);
+		records_dash_btn.setBackground(Color.WHITE);
+		genCode.setBackground(Color.RED);
+		
 		// Set up font and foreground color
 		tasks.setFont(seoge);
 		tasks.setForeground(Color.WHITE);
@@ -114,7 +212,23 @@ public class WindowActivity extends JFrame {
 		setBrand_btn.setForeground(Color.WHITE); 
 		removeItem_btn.setFont(seoge);
 		removeItem_btn.setForeground(Color.WHITE);
-		
+		totalProducts_dash_btn.setFont(seoge2);
+		totalProducts_dash_btn.setForeground(Color.BLACK);
+		brands_dash_btn.setFont(seoge2);
+		brands_dash_btn.setForeground(Color.BLACK);
+		categories_dash_btn.setFont(seoge2);
+		categories_dash_btn.setForeground(Color.BLACK);
+		records_dash_btn.setFont(seoge2);
+		records_dash_btn.setForeground(Color.BLACK);
+		prodName.setFont(calibri);
+		prodName.setForeground(Color.BLACK);
+		price.setFont(calibri);
+		price.setForeground(Color.BLACK);
+		cat.setFont(calibri);
+		cat.setForeground(Color.BLACK);
+		prodCode.setFont(calibri);
+		prodCode.setForeground(Color.BLACK);
+		genCode.setForeground(Color.WHITE);
 		
 		// Set up logo and icon
 		appLogo = new JLabel(logo);
@@ -124,9 +238,9 @@ public class WindowActivity extends JFrame {
 		
 		/**
 		 * @NOTE: ADDING THE COMPONENTS TO THEIR RESPECTIVE PANELS  
-		 */
+		 */	
 		// Header Panel
-		headerP.add(home_btn, BorderLayout.WEST);
+		headerP.add(home_btn, BorderLayout.EAST);
 		headerP.add(headerTitle, BorderLayout.CENTER);
 		
 		// Logo Panel
@@ -140,18 +254,91 @@ public class WindowActivity extends JFrame {
 		sidebarP.add(padding);
 		sidebarP.add(logoP);
 		
-		// Content Panel
+		// Dash board Panel 
+		dashboardP.setName("DASHBOARD");
+		dashboardP.add(totalProducts_dash_btn);
+		dashboardP.add(brands_dash_btn);
+		dashboardP.add(categories_dash_btn);
+		dashboardP.add(records_dash_btn);
 		
-	}
+		// New Product Panel
+		newProductP.setName("NEW_PRODUCT");
+		newProductP.add(prodName);
+		newProductP.add(getProdName_field);
+		newProductP.add(price);
+		newProductP.add(getPrice_field);
+		newProductP.add(cat);
+		newProductP.add(getCat_field);
+		newProductP.add(prodCode);
+		newProductP.add(getProdCode_field);
+		newProductP.add(genCode);
+		newProductP.add(saveChanges);
+		
+		// Set up brand panel
+		
+		
+		// Content Panel with Card Layout
+		contentP.add("DASHBOARD", dashboardP);
+		contentP.add("NEW_PRODUCT", newProductP);
+		
+		/**
+		 * CARD LAYOUT SET UP
+		 */
+		// Initialize card layout
+//		card = new CardLayout(10, 10); 
+//		contentP.setLayout(card);
 	
+	} // end of initComponents 
+	
+	/*
+	 * ADDING INITIALIZED COMPONENTS RESPECTIVELY TO THIS CLASS AS JFRAME
+	 */
 	private void addComponents() {
+	
 		/**
 		 *  @NOTE: ADDING THE INITIALIZED COMPONENTS TO THE FRAME
 		 */
 		add(headerP, BorderLayout.NORTH); 
 		add(sidebarP, BorderLayout.WEST);
 		add(contentP, BorderLayout.CENTER);
-	}
+	
+	} // end of addComponents
+	
+	/*
+	 * METHOD TO SET UP ACTION COMMANDS FOR ACTION LISTENER
+	 */
+	private void actionCommander() {
+		
+		// Log to console
+        System.out.println("Setting up action commands!!!");
+        
+        /// Home Button
+        home_btn.setActionCommand("home");
+        
+        // Side bar events 
+        newProduct_btn.setActionCommand("product");
+        setBrand_btn.setActionCommand("brand");
+        removeItem_btn.setActionCommand("remove");
+		
+	} // end of actionCommander
+	
+	/*
+	 * ADDING AND REGISTERING EVENT LISTENERS 
+	 */
+	private void addListeners() {
+		
+		// Log to console
+        System.out.println("Adding event listeners!!!"); 
+        
+        // Home button object
+        home_btn.addActionListener(eventhandler); 
+        
+        // Side bar listeners objects 
+        newProduct_btn.addActionListener(eventhandler);
+        setBrand_btn.addActionListener(eventhandler);
+        removeItem_btn.addActionListener(eventhandler);
+		
+	} // end of addListeners
 	
 	
 	public static void main(String[] args) {
