@@ -44,12 +44,18 @@ public class WindowActivity extends JFrame {
 	JLabel prodCode; 
 	JLabel brands; 
 	JLabel enlistProd;
+	JLabel remProd; 
+	JLabel remBrand; 
+	JLabel remCat; 
 	
 	// Text fields
 	JTextField getProdName_field;
 	JTextField getPrice_field;
 	JTextField getCat_field;
 	JTextField getProdCode_field;
+	JTextField getRemProd_field; 
+	JTextField getRemBrand_field; 
+	JTextField getRemCat_field; 
 	
 	// Combo boxes 
 	JComboBox getBrands_box; 
@@ -67,6 +73,9 @@ public class WindowActivity extends JFrame {
 	JButton genCode;
 	JButton saveChanges;
 	JButton saveChanges2;
+	JButton ok_btn; 
+	JButton ok_btn2; 
+	JButton ok_btn3; 
 	
 	// Font
 	Font seoge = new Font("Segoe UI", Font.PLAIN, 12); 
@@ -121,6 +130,7 @@ public class WindowActivity extends JFrame {
 			dashboardP = new JPanel(new GridLayout(4, 1, 5, 5));
 			newProductP = new JPanel(new GridLayout(10, 1, 10, 10));
 			setBrandP = new JPanel(new GridLayout(5, 1, 10, 10));		
+			removeItemP = new JPanel(new GridLayout(6, 2, 10, 10)); 
 		headerP = new JPanel(new BorderLayout()); 
 		sidebarP = new JPanel(); 
 		logoP = new JPanel();
@@ -137,6 +147,7 @@ public class WindowActivity extends JFrame {
 		dashboardP.setOpaque(false);
 		newProductP.setOpaque(false);
 		setBrandP.setOpaque(false);
+		removeItemP.setOpaque(false);
 		
 		// Set the background color
 		contentP.setBackground(Color.WHITE);
@@ -152,21 +163,23 @@ public class WindowActivity extends JFrame {
 		prodCode = new JLabel("Product Code", JLabel.LEFT);
 		brands = new JLabel("Brands", JLabel.LEFT);
 		enlistProd = new JLabel("Enlist and assign product", JLabel.LEFT); 
+		remProd = new JLabel("Remove Product", JLabel.LEFT); 
+		remBrand = new JLabel("Remove Brand", JLabel.LEFT); 
+		remCat = new JLabel("Remove Category"); 
 		
 		// Initialize the text fields
 		getProdName_field = new JTextField();
 		getPrice_field = new JTextField();
 		getCat_field = new JTextField(); 
 		getProdCode_field = new JTextField();
+		getRemProd_field = new JTextField(); 
+		getRemBrand_field = new JTextField(); 
+		getRemCat_field = new JTextField(); 
 		
 		// Initialize combo-boxes and its String lists of content 
 		String[] brands_ls = {
-	            "Bench",
-	            "Claydoh", 
-	            "Bvlgari",
-	            "Acer",  
-	            "Oppo" 
-	        };
+				
+	    };
 		
 		getBrands_box = new JComboBox<>(brands_ls); 
 		getEnlistProd_box = new JComboBox<>(brands_ls); 
@@ -183,12 +196,18 @@ public class WindowActivity extends JFrame {
 		genCode = new JButton("Generate Code");
 		saveChanges = new JButton("Save Changes"); 
 		saveChanges2 = new JButton("Save Changes"); 
+		ok_btn = new JButton("OK"); 
+		ok_btn2 = new JButton("OK"); 
+		ok_btn3 = new JButton("OK"); 
 		
 		// Set up text field properties
 		getProdName_field.setPreferredSize(new Dimension(800, 30));
 		getPrice_field.setPreferredSize(new Dimension(800, 30));
 		getCat_field.setPreferredSize(new Dimension(800, 30));
 		getProdCode_field.setPreferredSize(new Dimension(800, 30));
+		getRemProd_field.setPreferredSize(new Dimension(400, 30));
+		getRemBrand_field.setPreferredSize(new Dimension(400, 30));
+		getRemCat_field.setPreferredSize(new Dimension(300, 30));
 		
 		// Set up combo-boxes
 		getBrands_box.setPreferredSize(new Dimension(800, 30));
@@ -218,6 +237,11 @@ public class WindowActivity extends JFrame {
 		/* Save Changes */
 		saveChanges.setHorizontalAlignment(SwingConstants.LEFT);
 		saveChanges2.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		/* OK button */
+		ok_btn.setPreferredSize(new Dimension(60, 30));
+		ok_btn2.setPreferredSize(new Dimension(60, 30));
+		ok_btn3.setPreferredSize(new Dimension(60, 30));
 		
 		// Set up background color
 		newProduct_btn.setBackground(new Color(37, 54, 70 ));
@@ -257,7 +281,11 @@ public class WindowActivity extends JFrame {
 		prodCode.setFont(calibri);
 		prodCode.setForeground(Color.BLACK);
 		genCode.setForeground(Color.WHITE);
-		
+		brands.setFont(calibri);
+		brands.setForeground(Color.BLACK);
+		enlistProd.setFont(calibri);
+		enlistProd.setForeground(Color.BLACK);
+
 		// Set up logo and icon
 		appLogo = new JLabel(logo);
 		appIcon = new JLabel("AppIcon", JLabel.CENTER);
@@ -310,11 +338,27 @@ public class WindowActivity extends JFrame {
 		setBrandP.add(getEnlistProd_box);
 		setBrandP.add(saveChanges2);
 		
+		// Set up remove item panel 
+		removeItemP.setName("REMOVE");
+		removeItemP.add(remProd); 
+		removeItemP.add(new JLabel(" ")); 
+		removeItemP.add(getRemProd_field); 
+		removeItemP.add(ok_btn); 
+		removeItemP.add(remBrand);
+		removeItemP.add(new JLabel(" ")); 
+		removeItemP.add(getRemBrand_field);
+		removeItemP.add(ok_btn2); 
+		removeItemP.add(remCat);
+		removeItemP.add(new JLabel("")); 
+		removeItemP.add(getRemCat_field); 
+		removeItemP.add(ok_btn3);
+		
+		
 		// Content Panel with Card Layout
 		contentP.add("DASHBOARD", dashboardP);
 		contentP.add("NEW_PRODUCT", newProductP);
 		contentP.add("BRANDS", setBrandP);
-		
+		contentP.add("REMOVE", removeItemP); 
 		
 	
 		/**
