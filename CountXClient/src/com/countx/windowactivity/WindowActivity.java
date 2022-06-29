@@ -42,6 +42,8 @@ public class WindowActivity extends JFrame {
 	JLabel price; 
 	JLabel cat; 
 	JLabel prodCode; 
+	JLabel brands; 
+	JLabel enlistProd;
 	
 	// Text fields
 	JTextField getProdName_field;
@@ -49,6 +51,9 @@ public class WindowActivity extends JFrame {
 	JTextField getCat_field;
 	JTextField getProdCode_field;
 	
+	// Combo boxes 
+	JComboBox getBrands_box; 
+	JComboBox getEnlistProd_box; 
 	
 	// Buttons
 	JButton newProduct_btn;
@@ -61,6 +66,7 @@ public class WindowActivity extends JFrame {
 	JButton records_dash_btn; 
 	JButton genCode;
 	JButton saveChanges;
+	JButton saveChanges2;
 	
 	// Font
 	Font seoge = new Font("Segoe UI", Font.PLAIN, 12); 
@@ -109,11 +115,12 @@ public class WindowActivity extends JFrame {
 	 * METHOD TO INITIALIZE ALL GLOBAL COMPONENTS
 	 * */
 	private void initComponents() {
-		
+
 		// Initialize Panels
 		contentP = new JPanel(); 
 			dashboardP = new JPanel(new GridLayout(4, 1, 5, 5));
 			newProductP = new JPanel(new GridLayout(10, 1, 10, 10));
+			setBrandP = new JPanel(new GridLayout(5, 1, 10, 10));		
 		headerP = new JPanel(new BorderLayout()); 
 		sidebarP = new JPanel(); 
 		logoP = new JPanel();
@@ -129,6 +136,7 @@ public class WindowActivity extends JFrame {
 		padding.setOpaque(false);
 		dashboardP.setOpaque(false);
 		newProductP.setOpaque(false);
+		setBrandP.setOpaque(false);
 		
 		// Set the background color
 		contentP.setBackground(Color.WHITE);
@@ -142,12 +150,26 @@ public class WindowActivity extends JFrame {
 		price = new JLabel("Price", JLabel.LEFT); 
 		cat = new JLabel("Category", JLabel.LEFT);
 		prodCode = new JLabel("Product Code", JLabel.LEFT);
+		brands = new JLabel("Brands", JLabel.LEFT);
+		enlistProd = new JLabel("Enlist and assign product", JLabel.LEFT); 
 		
 		// Initialize the text fields
 		getProdName_field = new JTextField();
 		getPrice_field = new JTextField();
 		getCat_field = new JTextField(); 
 		getProdCode_field = new JTextField();
+		
+		// Initialize combo-boxes and its String lists of content 
+		String[] brands_ls = {
+	            "Bench",
+	            "Claydoh", 
+	            "Bvlgari",
+	            "Acer",  
+	            "Oppo" 
+	        };
+		
+		getBrands_box = new JComboBox<>(brands_ls); 
+		getEnlistProd_box = new JComboBox<>(brands_ls); 
 		
 		// Initialize the buttons
 		newProduct_btn = new JButton("New Product");
@@ -160,12 +182,17 @@ public class WindowActivity extends JFrame {
 		records_dash_btn = new JButton("Records"); 
 		genCode = new JButton("Generate Code");
 		saveChanges = new JButton("Save Changes"); 
+		saveChanges2 = new JButton("Save Changes"); 
 		
 		// Set up text field properties
 		getProdName_field.setPreferredSize(new Dimension(800, 30));
 		getPrice_field.setPreferredSize(new Dimension(800, 30));
 		getCat_field.setPreferredSize(new Dimension(800, 30));
 		getProdCode_field.setPreferredSize(new Dimension(800, 30));
+		
+		// Set up combo-boxes
+		getBrands_box.setPreferredSize(new Dimension(800, 30));
+		getEnlistProd_box.setPreferredSize(new Dimension(800, 30)); 
 		
 		// Set up button properties
 		/* Home Button*/
@@ -190,6 +217,7 @@ public class WindowActivity extends JFrame {
 		
 		/* Save Changes */
 		saveChanges.setHorizontalAlignment(SwingConstants.LEFT);
+		saveChanges2.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		// Set up background color
 		newProduct_btn.setBackground(new Color(37, 54, 70 ));
@@ -275,12 +303,20 @@ public class WindowActivity extends JFrame {
 		newProductP.add(saveChanges);
 		
 		// Set up brand panel
-		
+		setBrandP.setName("BRANDS");
+		setBrandP.add(brands);
+		setBrandP.add(getBrands_box);
+		setBrandP.add(enlistProd); 
+		setBrandP.add(getEnlistProd_box);
+		setBrandP.add(saveChanges2);
 		
 		// Content Panel with Card Layout
 		contentP.add("DASHBOARD", dashboardP);
 		contentP.add("NEW_PRODUCT", newProductP);
+		contentP.add("BRANDS", setBrandP);
 		
+		
+	
 		/**
 		 * CARD LAYOUT SET UP
 		 */
