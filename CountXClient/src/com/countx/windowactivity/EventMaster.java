@@ -87,13 +87,31 @@ public class EventMaster implements ActionListener, KeyListener {
 			
 				
 			case "brand":
+				System.out.println("***Redirecting to Set up brand Tasks***");
+				System.out.println("=== Tasks: Set up brand ===");
+				System.out.println("Component name: " + windowActivity.setBrandP.getName());
 				
+				windowActivity.setBrandP.setVisible(true);
 				
+				windowActivity.newProductP.setVisible(false);				
+				windowActivity.dashboardP.setVisible(false);
+				windowActivity.removeItemP.setVisible(false);
+				
+//				((CardLayout) windowActivity.contentP.getLayout()).show(windowActivity.contentP, "BRANDS");
 				break; 
 			
 			case "remove":
+				System.out.println("***Redirecting to Remove Item Tasks s***");
+				System.out.println("=== Tasks: Remove Item ===");
+				System.out.println("Component name: " + windowActivity.removeItemP.getName());
 				
+				windowActivity.removeItemP.setVisible(true);
 				
+				windowActivity.setBrandP.setVisible(false);
+				windowActivity.newProductP.setVisible(false);				
+				windowActivity.dashboardP.setVisible(false);
+				
+//				((CardLayout) windowActivity.contentP.getLayout()).show(windowActivity.contentP, "REMOVE");
 				break; 
 		}
 	}
