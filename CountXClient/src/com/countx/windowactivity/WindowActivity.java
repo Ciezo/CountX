@@ -340,7 +340,7 @@ public class WindowActivity extends JFrame {
 		// Set up logo and icon
 		appLogo = new JLabel(logo);
 		appIcon = new JLabel("AppIcon", JLabel.CENTER);
-		padding.setPreferredSize(new Dimension(50, this.getHeight()));
+		padding.setPreferredSize(new Dimension(50, 430));
 		padding.setMaximumSize(getMaximumSize().getSize());
 		
 		/**
