@@ -49,4 +49,5 @@ public interface JaxWsServer {
 	
 	// Interface for viewing items from the whole inventory
 	@WebMethod Item [] viewItemInventory();
+	
 }

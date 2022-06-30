@@ -23,6 +23,9 @@ public class CodeGen {
 	// Setting the maximum number to generate
 	int MAX_THRESHOLD = 1000; 
 	
+	// Set max salt string
+	final int MAX_SALT = 5; 
+	
     // Random class for implementing RGN
     private Random random = new Random(); 
     private int rgn = random.nextInt(MAX_THRESHOLD); 
@@ -56,7 +59,7 @@ public class CodeGen {
         /**
          * We can set this other number as well.
          */
-        while (salt.length() < 20) { 
+        while (salt.length() < MAX_SALT) { 
             int index = (int) (rnd.nextFloat() * KEY.length());
             salt.append(KEY.charAt(index));
         }

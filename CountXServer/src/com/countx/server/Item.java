@@ -33,16 +33,18 @@ public class Item {
 	private String name; 
 	private String code; 
 	private String brand;
+	private String category;
 	private int price;
 	
 	// Instantiate the CodeGen class so we can get the RGN
 	private CodeGen generate = new CodeGen();
 	
-	public Item(String name, int price, String brand) {
+	public Item(String name, int price, String brand, String category) {
 		this.name = name; 
 		generate.setRGN();
 		this.code = generate.genKEY();
 		this.brand = brand;
+		this.category = category;
 		this.price = price; 		
 	}
 	
@@ -66,6 +68,14 @@ public class Item {
 	
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+	
+	public void setCat(String category) {
+		this.category = category; 
+	}
+	
+	public String getCat() {
+		return category; 
 	}
 	
 	public String getBrand() {

@@ -19,16 +19,27 @@ import java.net.MalformedURLException;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import com.countx.server.JaxWsServer;
 import com.countx.server.Item;
+import com.countx.server.JaxWsServer;
+import com.countx.windowactivity.WindowActivity;
+import com.countx.ws.implement.ServicePublisher;
 
 
 public class Client {
 	
 	// Declare the product object of Item class type
-	static Item product = null; 
+	public Item product = null; 
+	
+	// Server handle 
+	public static JaxWsServer handle; 
 	
 	public static void main (String[] args) throws MalformedURLException{
+		
+		// End point and Service publisher
+		ServicePublisher.main(null);
+		
+		// UI 
+		WindowActivity windowActivity = new WindowActivity(); 
 		
 		// Properties 
 		Item[] item_ls; 
@@ -48,50 +59,30 @@ public class Client {
 		Service service = Service.create(url, qname); 
 						
 		// Access the web interface
-		JaxWsServer handle = service.getPort(JaxWsServer.class);
-		
-		
-		// Try making requests
-		product = new Item("Toothpaste", 150, "Colgate"); 
-		handle.addItem(product); 
-		
-		System.out.println("Product 1"); 
-		System.out.println("==========================");
-		System.out.println("Name: " + product.getName());
-		System.out.println("Product code: " + product.getCode());
-		System.out.println("Brand: " + product.getBrand());
-		System.out.println("Unit Price: " + product.getPrice());
-		System.out.println("==========================");
-		
-		
-		product = new Item(); 
-		product.setName("Napkin");
-		product.setCode("10000"); 
-		product.setBrand("Whisper");
-		product.setPrice(220); 
-		handle.addItem(product);
-		
-		System.out.println("Product 2"); 
-		System.out.println("==========================");
-		System.out.println("Name: " + product.getName());
-		System.out.println("Product code: " + product.getCode());
-		System.out.println("Brand: " + product.getBrand());
-		System.out.println("Unit Price: " + product.getPrice());
-		System.out.println("==========================");
+		handle = service.getPort(JaxWsServer.class);
 		
 		item_ls = handle.viewItemInventory(); 
 		
-		System.out.println("Viewing Items in inventory: "); 
-		System.out.println("-----------------------------------------------------");
+		System.out.println("RETRIEVING ITEMS FROM THE SERVER: "); 
+		/*"LOADING" SCREEN */
+		System.out.print("[");
+			for (int i = 0; i < 100; i++) {
+				try {
+					Thread.sleep(i);
+				} catch (InterruptedException e) { e.printStackTrace();} 
+				System.out.print("=");
+			}
+			System.out.print("]");
+			System.out.println("\n\n");
+			
 		for (int i = 0; i < item_ls.length; i++) {
 			System.out.println("Product Name: " + item_ls[i].getName());
 			System.out.println("Product Code: " + item_ls[i].getCode());
 			System.out.println("Product Brand: " + item_ls[i].getBrand());
+			System.out.println("Product Category: " + item_ls[i].getCat());
 			System.out.println("Unit Price: " + item_ls[i].getPrice()); 
-			System.out.println("==========================");
+			System.out.println("-----------------------------------------------------");
 			
 		}
-		
-		
 	}
 }

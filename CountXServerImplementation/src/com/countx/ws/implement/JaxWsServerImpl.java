@@ -101,6 +101,7 @@ public class JaxWsServerImpl implements JaxWsServer {
 			item_ls.setName(entry.getValue().getName());
 			item_ls.setCode(entry.getKey());
 			item_ls.setBrand(entry.getValue().getBrand());
+			item_ls.setCat(entry.getValue().getCat());
 			item_ls.setPrice(entry.getValue().getPrice());
 			product_record.add(item_ls); 
 		}
@@ -108,4 +109,5 @@ public class JaxWsServerImpl implements JaxWsServer {
 		
 		return (Item []) product_record.toArray(new Item[product_record.size()]);
 	}
+
 }
